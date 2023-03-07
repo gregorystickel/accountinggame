@@ -21,6 +21,7 @@ const Footer = ({
     setMessage([]);
     //clear  form
     document.getElementById("answerForm").reset();
+
     if (currentQuestion > 0) setCurrentQuestion(currentQuestion - 1);
   };
 
