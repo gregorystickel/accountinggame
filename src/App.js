@@ -163,7 +163,6 @@ function App() {
     }
 
     //set score if both answers are correct
-
     if (
       accrualAnswersCorrect === accrualAnswers.length &&
       cashAnswersCorrect === cashAnswers.length
@@ -173,7 +172,7 @@ function App() {
       }
       console.log(answersCorrect);
       console.log("Current Question", currentQuestion);
-      //setScore(score + 1);
+      //setScore using reducer
       setScore(
         answersCorrect.reduce(
           (accumlator, currentValue) => accumlator + currentValue

@@ -2,6 +2,8 @@ import React from "react";
 import classes from "./FinalScore.module.css";
 
 const FinalScore = ({ score, setScore, questionList, setShowFinal }) => {
+  
+  //Handle play again button to set score to 0 and close final score screen
   const playAgainHandler = (e) => {
     setScore(0);
     setShowFinal(false);
