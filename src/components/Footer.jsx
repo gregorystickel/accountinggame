@@ -7,7 +7,7 @@ const Footer = ({
   questionList,
   finishHandler,
   setMessage,
-  
+  started,
 }) => {
   const incrementQuestion = () => {
     setMessage([]);
@@ -17,8 +17,6 @@ const Footer = ({
     if (currentQuestion < questionList.length - 1)
       setCurrentQuestion(currentQuestion + 1);
   };
-
-  
 
   const decrementQuestion = () => {
     setMessage([]);
@@ -30,9 +28,9 @@ const Footer = ({
 
   return (
     <div className={classes.footer}>
-      <button onClick={decrementQuestion}>Previous</button>
-      <button onClick={finishHandler}>Finish</button>
-      <button onClick={incrementQuestion}>Next</button>
+      {started && <button onClick={decrementQuestion}>Previous</button>}
+      {started && <button onClick={finishHandler}>Finish</button>}
+      {started && <button onClick={incrementQuestion}>Next</button>}
     </div>
   );
 };

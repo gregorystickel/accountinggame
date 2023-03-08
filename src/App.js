@@ -25,17 +25,16 @@ function App() {
       .then((response) => {
         console.log("Axios", response);
         setQuestionList(response.data); //store question in state
-        setAnswersCorrect(new Array(questionList.length).fill(0)); //Populate Array to store the correct answers
       })
       .catch((error) => {
         console.log(error);
       });
-    // eslint-disable-next-line
   }, []);
 
   //sets started state on start click
   const startHandler = (e) => {
     setStarted(true);
+    setAnswersCorrect(new Array(questionList.length).fill(0)); //Populate Array to store the correct answers
   };
 
   //Handle finish button click
@@ -228,6 +227,7 @@ function App() {
         setCurrentQuestion={setCurrentQuestion}
         finishHandler={finishHandler}
         setMessage={setMessage}
+        started={started}
       />
     </div>
   );

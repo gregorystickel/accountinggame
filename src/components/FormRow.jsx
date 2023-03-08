@@ -1,5 +1,5 @@
 import React from "react";
-import classes from "./FormRow.module.css"
+import classes from "./FormRow.module.css";
 
 const FormRow = ({ name, index }) => {
   return (

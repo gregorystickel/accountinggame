@@ -1,9 +1,9 @@
 .resize {
-    resize: horizontal;
-    width: 50px;
+  resize: horizontal;
+  width: 50px;
 }
 
-input, select {
-    margin: 5px;
+input,
+select {
+  margin: 5px;
 }
-
