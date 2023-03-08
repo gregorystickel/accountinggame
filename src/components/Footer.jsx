@@ -7,6 +7,7 @@ const Footer = ({
   questionList,
   finishHandler,
   setMessage,
+  
 }) => {
   const incrementQuestion = () => {
     setMessage([]);
@@ -16,6 +17,8 @@ const Footer = ({
     if (currentQuestion < questionList.length - 1)
       setCurrentQuestion(currentQuestion + 1);
   };
+
+  
 
   const decrementQuestion = () => {
     setMessage([]);

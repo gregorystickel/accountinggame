@@ -2,6 +2,7 @@ import classes from "./App.module.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import FormRow from "./components/FormRow";
+import FinalScore from "./components/FinalScore";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -12,6 +13,7 @@ function App() {
   const [started, setStarted] = useState(false);
   const [message, setMessage] = useState([]);
   const [score, setScore] = useState(0);
+  const [showFinal, setShowFinal] = useState(false)
 
   //sets started state
   const startHandler = (e) => {
@@ -20,6 +22,7 @@ function App() {
 
   //Handle finish button click
   const finishHandler = () => {
+    setShowFinal(true);
     setStarted(false);
     setMessage([]);
   };
@@ -194,14 +197,16 @@ function App() {
             </form>
           </div>
         )}
+        {showFinal && <FinalScore score={score} questionList={questionList} setScore={setScore} setShowFinal={setShowFinal}/>}  
       </div>
-
+              
       <Footer
         questionList={questionList}
         currentQuestion={currentQuestion}
         setCurrentQuestion={setCurrentQuestion}
         finishHandler={finishHandler}
         setMessage={setMessage}
+        setShowFinal={setShowFinal}
       />
     </div>
   );

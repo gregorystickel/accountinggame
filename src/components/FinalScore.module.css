@@ -1,0 +1,17 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+
+  background-color: #6495ed;
+  align-items: center;
+
+  justify-content: center;
+  width: 50vw;
+  border-radius: 20px;
+  margin-top: 10px;
+}
+
+.container h1 {
+  text-align: center;
+}
