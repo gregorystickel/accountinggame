@@ -1,0 +1,9 @@
+.resize {
+    resize: horizontal;
+    width: 50px;
+}
+
+input, select {
+    margin: 5px;
+}
+

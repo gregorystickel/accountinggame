@@ -13,9 +13,27 @@ function App() {
   const [started, setStarted] = useState(false);
   const [message, setMessage] = useState([]);
   const [score, setScore] = useState(0);
-  const [showFinal, setShowFinal] = useState(false)
+  const [showFinal, setShowFinal] = useState(false);
+  const [answersCorrect, setAnswersCorrect] = useState([]);
 
-  //sets started state
+  //Get JSON Data for questions
+  useEffect(() => {
+    axios
+      .get(
+        "https://reclique.github.io/web-dev-testing/1_accounting_game/questions.json"
+      )
+      .then((response) => {
+        console.log("Axios", response);
+        setQuestionList(response.data); //store question in state
+        setAnswersCorrect(new Array(questionList.length).fill(0)); //Populate Array to store the correct answers
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    // eslint-disable-next-line
+  }, []);
+
+  //sets started state on start click
   const startHandler = (e) => {
     setStarted(true);
   };
@@ -42,23 +60,23 @@ function App() {
   const submitHandler = (e) => {
     e.preventDefault();
     setMessage([]);
-    // get form  data
+    // get all form data
     const form = document.querySelector("#answerForm");
     const formData = new FormData(form);
     const values = [...formData.entries()];
 
-    // store answers
+    // store answers for questions
     const cashAnswers =
       questionList[currentQuestion].correct_answers[0].entries;
     const accrualAnswers =
       questionList[currentQuestion].correct_answers[1].entries;
 
-    // store form values in new variable
+    // store array form values in new variable
     let formFields = values.map((item) => {
       return item;
-    }); // store values in a second array
+    });
 
-    // splits form values into individual answers
+    // splits form values into individual answers and creates objects
     let firstAnswerCash = Object.fromEntries(formFields.slice(0, 4));
     let secondAnswerCash = Object.fromEntries(formFields.slice(4, 8));
     let firstAnswerAccrual = Object.fromEntries(formFields.slice(8, 12));
@@ -74,11 +92,11 @@ function App() {
     removeEmptyValues(thirdAnswerAccrual);
     removeEmptyValues(fourthAnswerAccrual);
 
-    //variable to store answers
+    //variable to store answers correct
     let cashAnswersCorrect = 0;
     let accrualAnswersCorrect = 0;
 
-    // checkinng cash answers loop
+    //checkinng cash answers loop
     for (let i = 0; i < cashAnswers.length; i++) {
       if (
         cashAnswers[i].when === firstAnswerCash.cashdate0 &&
@@ -137,36 +155,33 @@ function App() {
         accrualAnswersCorrect++;
       }
     }
-    console.log("Accrual Answers Correct", accrualAnswersCorrect);
+
     //if accrual asnwers are corret display message
     if (accrualAnswersCorrect === accrualAnswers.length) {
       setMessage((message) => [...message, "Accrual answer correct!!!"]);
     } else {
       setMessage((message) => [...message, "Accrual answer incorrect!!!"]);
     }
+
     //set score if both answers are correct
+
     if (
       accrualAnswersCorrect === accrualAnswers.length &&
       cashAnswersCorrect === cashAnswers.length
     ) {
-      setScore(score + 1);
+      if (answersCorrect[currentQuestion] === 0) {
+        answersCorrect[currentQuestion] = 1;
+      }
+      console.log(answersCorrect);
+      console.log("Current Question", currentQuestion);
+      //setScore(score + 1);
+      setScore(
+        answersCorrect.reduce(
+          (accumlator, currentValue) => accumlator + currentValue
+        )
+      );
     }
   };
-
-  //Get JSON Data for questions
-  useEffect(() => {
-    axios
-      .get(
-        "https://reclique.github.io/web-dev-testing/1_accounting_game/questions.json"
-      )
-      .then((response) => {
-        console.log("Axios", response);
-        setQuestionList(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
 
   return (
     <div className="App">
@@ -197,16 +212,22 @@ function App() {
             </form>
           </div>
         )}
-        {showFinal && <FinalScore score={score} questionList={questionList} setScore={setScore} setShowFinal={setShowFinal}/>}  
+        {showFinal && (
+          <FinalScore
+            score={score}
+            questionList={questionList}
+            setScore={setScore}
+            setShowFinal={setShowFinal}
+          />
+        )}
       </div>
-              
+
       <Footer
         questionList={questionList}
         currentQuestion={currentQuestion}
         setCurrentQuestion={setCurrentQuestion}
         finishHandler={finishHandler}
         setMessage={setMessage}
-        setShowFinal={setShowFinal}
       />
     </div>
   );

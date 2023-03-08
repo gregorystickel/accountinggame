@@ -1,4 +1,5 @@
 import React from "react";
+import classes from "./FormRow.module.css"
 
 const FormRow = ({ name, index }) => {
   return (
@@ -20,12 +21,14 @@ const FormRow = ({ name, index }) => {
       </select>
       <label htmlFor={name + "cr" + index}>CR:</label>
       <input
+        className={classes.resize}
         type="number"
         name={name + "cr" + index}
         id={name + "cr" + index}
       />
       <label htmlFor={name + "dr" + index}>DR:</label>
       <input
+        className={classes.resize}
         type="number"
         name={name + "dr" + index}
         id={name + "dr" + index}
